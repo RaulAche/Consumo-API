@@ -45,21 +45,20 @@ function doQuery( url, displayFunction ){
 
 }
 
+function formatQuote( quote ) {
+    return {
+        id: quote.quote.id,
+        text: quote.quote,
+        author: quote.author,
+}
+
 function displayQuotes( data ) {
 
     console.log("display",data);
 
-    const body = document.querySelector("body")
+    const formattedQuotes = data.map( formatQuote )
     
-    data.forEach(function(quote){
-
-        const body = document.querySelector("body")
-        
-        const quoteBox = createQuoteHTML(quote)
-        
-        body.append(quoteBox)
-
-    })
+    formatQuotes.forEach( createQuoteHTML )
 }
 
 function createQuoteHTML( quote ) {
@@ -67,9 +66,14 @@ function createQuoteHTML( quote ) {
     const quoteBox = document.createElement("blockquote")
     const textBox = document.createElement("p")
     const authorBox = document.createElement("p")
+    
+    textBox.classList.add("text")
+    authorBox.classList.add("author")
 
     textBox.innerHTML = quote.quote
     authorBox.innerHTML = quote.author
+    
+    quoteBox.setAttribute("data-id",quote.id)
 
     quoteBox.append( textBox )
     quoteBox.append( authorBox )
